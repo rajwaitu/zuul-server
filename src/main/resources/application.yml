@@ -1,0 +1,32 @@
+server:
+  port: 8892
+
+spring:
+  application:
+    name: zuul-server
+    
+  profiles:
+    active: ${SPRING_ACTIVE_PROFILE:development}
+
+    
+eureka:
+  instance:
+    preferIpAddress: true
+  client:    register-with-eureka: true
+    fetchRegistry: true
+    service-url:
+      default-zone:  ${EUREKA_SERVER_URL:http://localhost:8761}
+      
+zuul:
+  routes:
+    orderservice:
+      path: /v1/orders
+      serviceId: secure-order-service
+      sensitiveHeaders:
+    itemservice:
+      path: /v1/items
+      serviceId: secure-item-service
+      sensitiveHeaders:
+      
+verify-token-url: ${OKTA_VERIFY_TOKEN_URL:https://<okta domain>/oauth2/default/v1/introspect}
+
